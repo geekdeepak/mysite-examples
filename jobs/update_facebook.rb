@@ -30,12 +30,13 @@ puts lutdatabase
 ##################
 # FACEBOOK ACCESS
 ##################
-config = YAML::load(File.open("#{RAILS_ROOT}/config/facebook.yml"));
+config = YAML::load(File.open("#{Rails.root}/config/facebook.yml"));
+config['page_ids'].each{|key,value| 
+
 gscc_app = FbGraph::Application.new(config['production']['app_id']);
 access_token = gscc_app.get_access_token(config['production']['client_secret']);
-page_id = config['production']['page_id'];
-
-page = FbGraph::Page.new(page_id, :access_token => access_token).fetch;
+#page_id = config['production']['page_id'];
+page = FbGraph::Page.new(value, :access_token => access_token).fetch;
 puts "\nAccessing facebook page - "+page.name
 #need to fetch event by identifier so you get all the information
 puts "\nSearching for dirty events..."
@@ -70,21 +71,21 @@ end
 ##################
 # Deleting events 
 ##################
-puts "\nLooking for deleted facebook events..."
-all_events = FacebookEvent.find(:all);
-page.events.each do |e|
-  all_events.delete_if { |ae| ae.identifier == e.identifier }
-end
-if all_events.size > 0
-  puts "Found deleted events! Deleting events from database..."
-  all_events.each do |e|
-    puts "\n***deleting event "+e.name
-    e.delete
-    puts "****deleted."
-  end
-end
+#puts "\nLooking for deleted facebook events..."
+#all_events = FacebookEvent.find(:all);
+#page.events.each do |e|
+#  all_events.delete_if { |ae| ae.identifier == e.identifier }
+#end
+#if all_events.size > 0
+#  puts "Found deleted events! Deleting events from database..."
+#  all_events.each do |e|
+#    puts "\n***deleting event "+e.name
+#    e.delete
+#    puts "****deleted."
+#  end
+#end
 
-
+}
 
 
 
@@ -93,4 +94,3 @@ puts "\nUpdate complete."
 t2 = Time.now
 puts Time.now.strftime("%Y%m%d-%H%M%S") + " : " + __FILE__ + " finished  #{t2 - t1} secs"
 puts "================"
-
