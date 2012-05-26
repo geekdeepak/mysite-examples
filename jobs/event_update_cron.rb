@@ -16,14 +16,18 @@ config = YAML::load(File.open("#{Rails.root}/config/facebook.yml"));
 gscc_app = FbGraph::Application.new(config['production']['app_id'])
 access_token = gscc_app.get_access_token(config['production']['client_secret'])
 allevents.each do |e|	
-	ie = FbGraph::Event.new(e.identifier, :access_token => access_token).fetch;
-	if ie
-		puts 'adding entry for '+e.name
-		e.event_updates.create(:attending=>ie.attending.count,:maybe=>ie.maybe.count,:invited=>ie.invited.count)
-		puts 'entry added'
-	else
-		puts "event #{e.name} not found deleting..."
-		e.delete
+	begin
+		ie = FbGraph::Event.new(e.identifier, :access_token => access_token).fetch;
+		if ie
+			puts 'adding entry for '+e.name
+			e.event_updates.create(:attending=>ie.attending.count,:maybe=>ie.maybe.count,:invited=>ie.invited.count)
+			puts 'entry added'
+		else
+			puts "event #{e.name} not found deleting..."
+			e.delete
+		end
+	rescue FbGraph::InvalidRequest
+		puts "corrupt event #{e.name}"
 	end
 end
 
