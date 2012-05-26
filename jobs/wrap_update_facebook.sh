@@ -14,3 +14,4 @@ then
 fi
 
 rails runner ${basedir}/update_facebook.rb
+rails runner ${basedir}/event_update_cron.rb
