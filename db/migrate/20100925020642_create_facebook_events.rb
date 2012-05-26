@@ -9,6 +9,8 @@ class CreateFacebookEvents < ActiveRecord::Migration
       t.datetime :updated_time
       t.string :identifier
       t.string :picture
+      t.string :small_picture
+      t.string :normal_picture
 
       t.timestamps
     end

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100925020642) do
+ActiveRecord::Schema.define(:version => 20120523135046) do
+
+  create_table "event_updates", :force => true do |t|
+    t.integer  "facebook_event_id"
+    t.integer  "attending"
+    t.integer  "maybe"
+    t.integer  "invited"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "facebook_events", :force => true do |t|
     t.string   "name"
@@ -21,6 +30,8 @@ ActiveRecord::Schema.define(:version => 20100925020642) do
     t.datetime "updated_time"
     t.string   "identifier"
     t.string   "picture"
+    t.string   "small_picture"
+    t.string   "normal_picture"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -43,9 +43,9 @@ puts "\nSearching for dirty events..."
 
 page.events.each do |e|
   ie = FbGraph::Event.new(e.identifier, :access_token => access_token).fetch;
+  edatabase = FacebookEvent.find(:first, :conditions => [ "identifier = ?", ie.identifier ]);
   if ie.updated_time > lutdatabase
     puts "\n**found dirty facebook event - "+ie.name
-    edatabase = FacebookEvent.find(:first, :conditions => [ "identifier = ?", ie.identifier ]);
     if edatabase
       puts "***found database entry, updating the entry "+edatabase.name
       edatabase.name = ie.name
@@ -56,15 +56,23 @@ page.events.each do |e|
       edatabase.updated_time = ie.updated_time
       edatabase.identifier = ie.identifier
       edatabase.picture = ie.picture
+      edatabase.small_picture = ie.picture+'?type=small'
+      edatabase.normal_picture = ie.picture+'?type=normal'
       edatabase.save
       puts "***updated "+edatabase.name
     else
       puts "***database entry not found, adding to database "+ie.name
-      edatabase = FacebookEvent.new( :name => ie.name, :start_time => ie.start_time, :end_time => ie.end_time, :location => ie.location, :description => ie.description, :updated_time => ie.updated_time, :identifier => ie.identifier, :picture => ie.picture )
+      edatabase = FacebookEvent.new( :name => ie.name, :start_time => ie.start_time, :end_time => ie.end_time, 
+        :location => ie.location, :description => ie.description, :updated_time => ie.updated_time, 
+        :identifier => ie.identifier, :picture => ie.picture,:small_picture=>ie.picture+'?type=small',
+        :normal_picture=>ie.picture+'?type=normal' )
       edatabase.save
       puts "***saved "+edatabase.name
     end
   end
+    puts "***event updates entered"+edatabase.name
+    edatabase.event_updates.create(:attending=>ie.attending.count,:maybe=>ie.maybe.count,:invited=>ie.invited.count)
+    puts
 end
 
 
