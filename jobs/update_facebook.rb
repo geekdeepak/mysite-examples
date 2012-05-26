@@ -70,7 +70,7 @@ page.events.each do |e|
       puts "***saved "+edatabase.name
     end
   end
-    puts "***event updates entered"+edatabase.name
+    puts "***event updates entered for "+edatabase.name
     edatabase.event_updates.create(:attending=>ie.attending.count,:maybe=>ie.maybe.count,:invited=>ie.invited.count)
     puts
 end
