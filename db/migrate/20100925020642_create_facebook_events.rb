@@ -1,6 +1,7 @@
 class CreateFacebookEvents < ActiveRecord::Migration
   def self.up
     create_table :facebook_events do |t|
+      t.integer :page_id
       t.string :name
       t.datetime :start_time
       t.datetime :end_time

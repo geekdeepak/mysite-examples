@@ -83,7 +83,7 @@ pages.each do |p|
         puts "***updated "+edatabase.name
       else
         puts "***database entry not found, adding to database "+ie.name
-        edatabase = FacebookEvent.new( :name => ie.name, :start_time => ie.start_time, :end_time => ie.end_time, 
+        edatabase = p.facebook_events.new( :name => ie.name, :start_time => ie.start_time, :end_time => ie.end_time, 
           :location => ie.location, :description => ie.description, :updated_time => ie.updated_time, 
           :identifier => ie.identifier, :picture => ie.picture,:small_picture=>ie.picture+'?type=small',
           :normal_picture=>ie.picture+'?type=normal' )
