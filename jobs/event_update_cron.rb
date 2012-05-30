@@ -28,6 +28,12 @@ allevents.each do |e|
 		end
 	rescue FbGraph::InvalidRequest
 		puts "corrupt event #{e.name}"
+	rescue HTTPClient::ReceiveTimeoutError
+		puts 'recieve timout error'
+	rescue HTTPClient::ConnectTimeoutError
+		puts 'send timeout error'
+	rescue 
+		puts 'error occured'
 	end
 end
 

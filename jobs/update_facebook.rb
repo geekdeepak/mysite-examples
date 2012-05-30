@@ -63,33 +63,41 @@ pages.each do |p|
   puts "\nSearching for dirty events..."
 
   page.events.each do |e|
-    ie = FbGraph::Event.new(e.identifier, :access_token => access_token).fetch;
-    if ie.updated_time > lutdatabase
-      puts "\n**found dirty facebook event - "+ie.name
-      edatabase = FacebookEvent.find(:first, :conditions => [ "identifier = ?", ie.identifier ]);
-      if edatabase
-        puts "***found database entry, updating the entry "+edatabase.name
-        edatabase.name = ie.name
-        edatabase.start_time = ie.start_time
-        edatabase.end_time = ie.end_time
-        edatabase.location = ie.location
-        edatabase.description = ie.description
-        edatabase.updated_time = ie.updated_time
-        edatabase.identifier = ie.identifier
-        edatabase.picture = ie.picture
-        edatabase.small_picture = ie.picture+'?type=small'
-        edatabase.normal_picture = ie.picture+'?type=normal'
-        edatabase.save
-        puts "***updated "+edatabase.name
-      else
-        puts "***database entry not found, adding to database "+ie.name
-        edatabase = p.facebook_events.new( :name => ie.name, :start_time => ie.start_time, :end_time => ie.end_time, 
-          :location => ie.location, :description => ie.description, :updated_time => ie.updated_time, 
-          :identifier => ie.identifier, :picture => ie.picture,:small_picture=>ie.picture+'?type=small',
-          :normal_picture=>ie.picture+'?type=normal' )
-        edatabase.save
-        puts "***saved "+edatabase.name
+    begin
+      ie = FbGraph::Event.new(e.identifier, :access_token => access_token).fetch;
+      if ie.updated_time > lutdatabase
+        puts "\n**found dirty facebook event - "+ie.name
+        edatabase = FacebookEvent.find(:first, :conditions => [ "identifier = ?", ie.identifier ]);
+        if edatabase
+          puts "***found database entry, updating the entry "+edatabase.name
+          edatabase.name = ie.name
+          edatabase.start_time = ie.start_time
+          edatabase.end_time = ie.end_time
+          edatabase.location = ie.location
+          edatabase.description = ie.description
+          edatabase.updated_time = ie.updated_time
+          edatabase.identifier = ie.identifier
+          edatabase.picture = ie.picture
+          edatabase.small_picture = ie.picture+'?type=small'
+          edatabase.normal_picture = ie.picture+'?type=normal'
+          edatabase.save
+          puts "***updated "+edatabase.name
+        else
+          puts "***database entry not found, adding to database "+ie.name
+          edatabase = p.facebook_events.new( :name => ie.name, :start_time => ie.start_time, :end_time => ie.end_time, 
+            :location => ie.location, :description => ie.description, :updated_time => ie.updated_time, 
+            :identifier => ie.identifier, :picture => ie.picture,:small_picture=>ie.picture+'?type=small',
+            :normal_picture=>ie.picture+'?type=normal' )
+          edatabase.save
+          puts "***saved "+edatabase.name
+        end
       end
+    rescue HTTPClient::ReceiveTimeoutError
+      puts 'recieve timout error'
+    rescue HTTPClient::ConnectTimeoutError
+      puts 'send timeout error'
+    rescue 
+      puts 'error occured'
     end
   end
 
