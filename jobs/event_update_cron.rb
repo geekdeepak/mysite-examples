@@ -9,7 +9,7 @@ if File.new(__FILE__).flock(File::LOCK_EX | File::LOCK_NB) == false
   puts "*** can't lock file, another instance of script running?  exiting"
   exit 1
 end
-puts "obtained file lock... starting facebook api calls...\n"
+puts "obtained file lock for event updates... starting facebook api calls...\n"
 
 allevents = FacebookEvent.find(:all, :conditions => [ "end_time > ?", Time.now ])
 config = YAML::load(File.open("#{Rails.root}/config/facebook.yml"));
@@ -19,9 +19,9 @@ allevents.each do |e|
 	begin
 		ie = FbGraph::Event.new(e.identifier, :access_token => access_token).fetch;
 		if ie
-			puts 'adding entry for '+e.name
+			puts 'adding event entry for '+e.name
 			e.event_updates.create(:attending=>ie.attending.count,:maybe=>ie.maybe.count,:invited=>ie.invited.count)
-			puts 'entry added'
+			puts 'event entry added'
 		else
 			puts "event #{e.name} not found deleting..."
 			e.delete

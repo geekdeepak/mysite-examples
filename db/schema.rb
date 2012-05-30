@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120523135046) do
+ActiveRecord::Schema.define(:version => 20120530084127) do
 
   create_table "event_updates", :force => true do |t|
     t.integer  "facebook_event_id"
@@ -32,6 +32,22 @@ ActiveRecord::Schema.define(:version => 20120523135046) do
     t.string   "picture"
     t.string   "small_picture"
     t.string   "normal_picture"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pages", :force => true do |t|
+    t.string   "page_identifier"
+    t.string   "name"
+    t.string   "link"
+    t.string   "category"
+    t.integer  "likes"
+    t.string   "website"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "picture"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
