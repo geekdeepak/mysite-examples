@@ -7,7 +7,7 @@ export RAILS_ROOT=`dirname ${basedir}`
 
 # detect if we're on the web server
 sname=`basename $RAILS_ROOT`
-if [ $sname == "myserver.org" ]
+if [ $sname == "brasilblogs.net" ]
 then
     echo "===On web server, changing rails environment==="
     export RAILS_ENV=production
