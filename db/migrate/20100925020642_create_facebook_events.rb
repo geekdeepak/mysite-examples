@@ -1,17 +1,18 @@
 class CreateFacebookEvents < ActiveRecord::Migration
   def self.up
+    return if Rails.env.old_events?
     create_table :facebook_events do |t|
-      t.integer :page_id
-      t.string :name
-      t.datetime :start_time
-      t.datetime :end_time
-      t.string :location
-      t.text :description
-      t.datetime :updated_time
-      t.string :identifier
-      t.string :picture
-      t.string :small_picture
-      t.string :normal_picture
+      t.integer   :page_id
+      t.string    :name
+      t.datetime  :start_time
+      t.datetime  :end_time
+      t.string    :location
+      t.text      :description
+      t.datetime  :updated_time
+      t.string    :identifier
+      t.string    :picture
+      t.string    :small_picture
+      t.string    :normal_picture
 
       t.timestamps
     end

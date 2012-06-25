@@ -1,5 +1,6 @@
 class CreatePages < ActiveRecord::Migration
   def self.up
+    return if Rails.env.old_events?
     create_table :pages do |t|
       t.string :page_identifier
       t.string :name

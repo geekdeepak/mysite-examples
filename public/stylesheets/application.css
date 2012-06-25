@@ -73,3 +73,11 @@ a {
 .error_messages ul {
   margin: 0;
 }
+
+.pull-left{
+  float:left;
+}
+
+.clear_float{
+  clear:both;
+}

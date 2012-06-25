@@ -1,0 +1,64 @@
+<div class="search_form">
+<% form_tag events_path, :method => 'get' do %>
+    <%= text_field_tag :search, params[:search],:placeholder=>"Facebook event id" %>
+    <%= text_field_tag :eventbrite, params[:eventbrite],:placeholder=>"Eventbrite dvent" %>
+    <%= submit_tag "Search", :name => nil %>
+<% end %>
+</div>
+<div class="event_form">
+	<table class="pull-left">
+		<%= form_for @event, :url=>events_path, :html => {:class => "nifty_form"} do |f| %>
+			<tr>
+				<td>Name</td>
+				<td>
+					<%= f.text_field :name,:placeholder=>"Name" %>&nbsp; 
+				</td>
+			</tr>
+			<tr>
+				<td>Location</td>
+				<td>
+					<%= f.text_field :location,:placeholder=>"Location" %>&nbsp; 
+				  	<%= f.text_field :identifier,:placeholder=>"Facebook id" %>
+				</td>
+			</tr>
+			<tr>
+				<td>Event start date</td>
+				<td>
+					<%= f.text_field :start_time,:placeholder=>"Start time" %>
+				</td>
+			</tr>
+			<tr>
+				<td>Event end date</td>
+				<td>
+					<%= f.text_field :end_time,:placeholder=>"End time" %>
+				</td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td>
+					<%= f.text_area :description,:placeholder=>"Description",:rows=>5,:cols=>30 %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%= f.submit "Create" %>
+				</td>
+			</tr>
+	</table>
+	<table class="pull-left">
+		<tr>
+			<td>Image</td>
+			<td><%= image_tag @event.normal_picture,:alt=>"" if @event.normal_picture %></td>
+		</tr>
+		<tr>
+			<td>Artist</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<br class="clear_float">		  
+	<% end %>
+</div>
