@@ -2,6 +2,7 @@ class FacebookEvent < ActiveRecord::Base
 
 	belongs_to :page
 	has_many :event_updates,:dependent => :destroy
+	validates :identifier, :presence => true, :uniqueness => true
 
 	def self.search(search)
 	  find(:first, :conditions => ['identifier = ?', search])
