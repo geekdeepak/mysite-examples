@@ -19,7 +19,7 @@
 				<td>Location</td>
 				<td>
 					<%= f.text_field :location,:placeholder=>"Location" %>&nbsp; 
-				  	<%= f.text_field :identifier,:placeholder=>"Facebook id" %>
+				  	<%= f.text_field :identifier,:placeholder=>"Facebook id",:readonly=>"readonly" %>
 				</td>
 			</tr>
 			<tr>
@@ -42,7 +42,7 @@
 			</tr>
 			<tr>
 				<td>
-					<%= f.submit "Create" %>
+					<%= f.submit  %>
 				</td>
 			</tr>
 	</table>

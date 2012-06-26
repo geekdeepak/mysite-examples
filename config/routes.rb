@@ -51,7 +51,11 @@ MysiteExamples::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => "welcome#index"
-  resources :events 
+  resources :events do
+    collection do
+      put  'create', :action => 'create'
+    end
+  end
   root :to => "events#index"
 
   # See how all your routes lay out with "rake routes"
